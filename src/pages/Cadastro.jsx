@@ -2,22 +2,47 @@
 
 export function Cadastro() {
     return (
-        <div className=" w-screen h-screen bg-orange-400 flex flex-col justify-center items-center">
-            <form action="get" className="bg-white w-80 h-1/2 flex flex-col justify-around items-center rounded-2xl">
-                <div className="p-4 m-1 mb-10 flex flex-col justify-around items-center">
-                    <label htmlFor="" className="mr-40">Usuário</label>
-                    <input type="text" className="m-2 p-1 w-52 bg-gray-100"/>
-                    
-                    <label htmlFor="" className="mr-40">Usuário</label>
-                    <input type="email" className="m-2 p-1 w-52 bg-gray-100"/>
-            
-                    <label htmlFor="" className="mr-40">Senha</label>
-                    <input type="password" className="m-2 p-1 w-52 bg-gray-100" />
-                    <button className="bg-red-500 mt-8 p-3 rounded-md text-white">CLIQUE AQUI</button>
-
-                    <p className="mt-10">Não tenho conta. <a href="Login.jsx" className="mt-12 text-orange-400">Cadastrar agora</a></p>
+        <div className=" w-screen h-screen bg-azulEscuro flex flex-row justify-evenly items-center">
+            <div className="w-1/2 h-full flex ">
+                <img src="vector-cadastro.svg" alt="imagem aqui" />
+            </div>
+            <form action="" className="bg-azulMedio text-white w-1/3 h-[80%] flex flex-col items-center justify-center rounded-3xl">
+                <h1 className="text-verde text-3xl font-bold">Cadastro</h1>
+                <div className="w-full flex flex-col items-center mb-4">
+                    <div className="relative w-10/12">
+                        <label htmlFor="" className="text-2xl">Usuário</label>
+                        <input
+                            type="text"
+                            id="usuario"
+                            className="p-3 w-full bg-azulEscuro rounded-md"
+                            placeholder="Digite seu suário"
+                        />
+                    </div>
                 </div>
+                <div className="w-full flex flex-col items-center mb-4">
+                    <div className="relative w-10/12">
+                        <label htmlFor="" className="text-2xl">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="p-3 w-full bg-azulEscuro rounded-md"
+                            placeholder="Digite seu email"
+                        />
+                    </div>
+                </div>
+                <div className="w-full flex flex-col items-center mb-4">
+                    <div className="relative w-10/12">
+                        <label htmlFor="" className="text-2xl">Senha</label>
+                        <input
+                            type="password"
+                            id="senha"
+                            className="p-3 w-full bg-azulEscuro rounded-md"
+                            placeholder="Digite sua senha"
+                        />
+                    </div>
+                </div>
+                <button className="bg-verde mt-8 p-3 w-10/12 rounded-md text-white">CADASTRE-SE</button>
             </form>
         </div>
     )
-}
+}   
