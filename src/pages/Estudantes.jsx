@@ -1,29 +1,88 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Pagina } from "../components/Pagina";
-import { ArrowUpDown, CircleArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Pagina } from "../components/Pagina"
+import { ArrowUpDown, CircleArrowLeft, Pencil, Trash2 } from "lucide-react"
 
 export function Estudantes() {
-    const navigate = useNavigate();
-    const [dados, setDados] = useState([
-        { id: "1", nome: "Pedro", email: "Pedroutumi@gmail.com" },
-        { id: "2", nome: "Sara", email: "Sarautumi@gmail.com" },
-    ]);
+    const navigate = useNavigate()
+    const [usuarios, setUsuarios] = useState([]) 
+    const [cadastroAberto, setCadastroAberto] = useState(false)
+    const [novoUsuario, setNovoUsuario] = useState({ id: "", nome: "", email: "" })
+    const [erro, setErro] = useState(null)
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        navigate("/Home");
-    };
+    const voltaParaHome = (e) => {
+        e.preventDefault()
+        navigate("/Home")
+    }
+    
+    useEffect(() => {
+        const fetchUsuarios = async () => {
+          try {
+            const response = await fetch("http://localhost:3333/usuarios")
+            if (!response.ok) {
+              throw new Error("Erro ao buscar os usuários")
+            }
+            const data = await response.json()
+            setUsuarios(data)
+          } catch (error) {
+            setErro(error.message) 
+          }
+        }
+    
+        fetchUsuarios() 
+      }, []) 
 
-    const handleExcluir = (id) => {
-        setDados(dados.filter((item) => item.id !== id));
-    };
+      const deleteDoBD = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3333/usuarios/${id}`, {
+                method: "DELETE",
+            })
+    
+            if (!response.ok) {
+                throw new Error("Erro ao excluir o estudante.")
+            }
+    
+            setUsuarios((prevUsuarios) => prevUsuarios.filter((user) => user.id !== id))
+            alert("Usuário excluído com sucesso!")
+        } catch (error) {
+            console.error(error)
+            alert("Erro ao excluir o usuário.")
+        }
+    }
+      const criaNoBD = async () => {
+        try {
+            const response = await fetch(`https://trabalhofinal-3.onrender.com`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(novoUsuario),
+            })
+    
+            if (!response.ok) {
+                throw new Error("Erro ao excluir o estudante.")
+            }
+            
+            const dados = await response.json()
+
+            setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
+            setNovoUsuario({ id: "", nome: "", email: "" })
+            alert("Usuário adicionado com sucesso!")
+        } catch (error) {
+            console.error(error)
+            alert("Erro ao criar o usuário.")
+        }
+    }
+
+    function podeCriar() {
+        setCadastroAberto(true)
+    }
 
     return (
         <Pagina>
             <div className="flex flex-col">
                 <header className="w-full h-10 p-8 flex flex-row justify-between items-center bg-verde">
-                    <CircleArrowLeft onClick={handleLogin} className="cursor-pointer text-azulMedio" />
+                    <CircleArrowLeft onClick={voltaParaHome} className="cursor-pointer text-azulMedio" />
                     <input type="text" placeholder="Search" className="p-2 border border-solid border-azulMedio bg-azulMedio text-verde rounded" />
                 </header>
                 <div className="bg-cinzaClaro flex flex-col w-full h-[90vh]">
@@ -31,9 +90,53 @@ export function Estudantes() {
                         <h1 className="p-3 flex flex-row items-center text-3xl">Lista de Estudantes</h1>
                         <div className="p-3 flex flex-row items-center gap-5">
                             <ArrowUpDown className="border border-black bg-azulMedio w-10 h-10 p-2 text-verde rounded-full" />
-                            <button className="w-52 h-10 bg-azulMedio text-verde rounded-md">Adicionar Novo Estudante</button>
+                            <button
+                                className="w-52 h-10 bg-azulMedio text-verde rounded-md"
+                                onClick={podeCriar}
+                            >
+                                Adicionar Novo Estudante
+                            </button>
                         </div>
                     </header>
+
+                    {
+                    cadastroAberto && (
+
+                    <div className="p-4">
+                        <h2 className="text-xl mb-4">Adicionar Novo Estudante</h2>
+                        <div className="flex gap-4">
+                            <input
+                                type="text"
+                                placeholder="ID"
+                                value={novoUsuario.id}
+                                onChange={(e) => setNovoUsuario({ ...novoUsuario, id: e.target.value })}
+                                className="p-2 border border-gray-300 rounded w-1/3"
+                            />
+                            <input
+                                type="text"
+                                placeholder="Nome"
+                                value={novoUsuario.nome}
+                                onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
+                                className="p-2 border border-gray-300 rounded w-1/3"
+                            />
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                value={novoUsuario.email}
+                                onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
+                                className="p-2 border border-gray-300 rounded w-1/3"
+                            />
+                            <button
+                                onClick={criaNoBD}
+                                className="bg-green-500 text-white px-4 py-2 rounded"
+                            >
+                                Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    )
+                    }
+
                     <table className="min-w-full table-auto border-collapse">
                         <thead>
                             <tr>
@@ -44,19 +147,14 @@ export function Estudantes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {dados.map((item) => (
-                                <tr key={item.id}>
-                                    <td className="border px-4 py-2">{item.id}</td>
-                                    <td className="border px-4 py-2">{item.nome}</td>
-                                    <td className="border px-4 py-2">{item.email}</td>
-                                    <td className="border px-4 py-2 flex justify-center">
-                                        <button className="bg-blue-500 text-white px-4 py-1 rounded">Editar</button>
-                                        <button
-                                            className="bg-red-500 text-white px-4 py-1 rounded ml-2"
-                                            onClick={() => handleExcluir(item.id)}
-                                        >
-                                            Excluir
-                                        </button>
+                            {usuarios.map((dado) => (
+                                <tr key={dado.id}>
+                                    <td className="border px-4 py-2">{dado.id}</td>
+                                    <td className="border px-4 py-2">{dado.nome}</td>
+                                    <td className="border px-4 py-2">{dado.email}</td>
+                                    <td className="border px-4 py-2 flex justify-evenly ">
+                                        <Pencil className="cursor-pointer" />
+                                        <Trash2 className="cursor-pointer" onClick={() => deleteDoBD(dado.id)} />
                                     </td>
                                 </tr>
                             ))}
