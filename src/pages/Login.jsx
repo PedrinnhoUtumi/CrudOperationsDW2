@@ -31,7 +31,7 @@ export function Login() {
                             placeholder="Digite sua senha"
                         />
                     </div>
-                    <Link to="/Painel" className="text-roxoClaro mt-2 hover:text-white cursor-pointer">
+                    <Link to="/home" className="text-roxoClaro mt-2 hover:text-white cursor-pointer">
                         Não tem conta? Clique aqui
                     </Link>
                 </div>

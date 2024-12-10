@@ -9,7 +9,6 @@ function App() {
     return (
         <Router> 
             <div className="flex">
-                <Menu/>
                 <div className="flex-1 p-4">
                 <Routes>
                     <Route path="/" element={<Login />} />
