@@ -13,7 +13,9 @@ export default {
         'azulMedio': '#1c1a3f',
         'verde': '#36b04c',
         'roxo': '#211f48',
-        'cinzaClaro': '#d9d9d9'
+        'cinzaClaro': '#d9d9d9',
+        'cinzaEscuro': '#4a4a4a',
+        'vermelhoEscuro': '#D85C5C',
       }
     },
   },

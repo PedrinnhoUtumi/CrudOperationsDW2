@@ -1,6 +1,41 @@
+import { useState } from "react";
 
 
 export function Cadastro() {
+    const [responseMessage, setResponseMessage] = useState('')
+    const [nome, setNome] = useState('')
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const enviaFormulario = async (event) =>  {
+        event.preventDefault()
+        
+        const formData = {
+            nome: nome,
+            email: email,
+            senha: senha,
+        }
+
+        try {
+            const response = await fetch('http://localhost:3333/usuarios', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                }, 
+                body: JSON.stringify(formData),
+            })
+
+            if (!response.ok) {
+                console.error("erro ao enviar dados!", response.status)
+                return
+            }
+            const data = await response.json()
+            setResponseMessage(data.message);
+        } catch (error) {
+            // 
+            console.error('Erro na requisição', error)
+            setResponseMessage('Erro ao enviar dados.')
+          }
+        }
     return (
         <div className=" w-screen h-screen bg-azulEscuro flex flex-row justify-evenly items-center">
             <div className="w-1/2 h-full flex ">
@@ -16,6 +51,8 @@ export function Cadastro() {
                             id="usuario"
                             className="p-3 w-full bg-azulEscuro rounded-md"
                             placeholder="Digite seu suário"
+                            value = {nome}
+                            onChange={(e) => setNome(e.target.value)}
                         />
                     </div>
                 </div>
@@ -27,6 +64,8 @@ export function Cadastro() {
                             id="email"
                             className="p-3 w-full bg-azulEscuro rounded-md"
                             placeholder="Digite seu email"
+                            value = {email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                 </div>
@@ -38,6 +77,8 @@ export function Cadastro() {
                             id="senha"
                             className="p-3 w-full bg-azulEscuro rounded-md"
                             placeholder="Digite sua senha"
+                            value = {senha}
+                            onChange={(e) => setSenha(e.target.value)}
                         />
                     </div>
                 </div>
@@ -45,4 +86,4 @@ export function Cadastro() {
             </form>
         </div>
     )
-}   
+}
