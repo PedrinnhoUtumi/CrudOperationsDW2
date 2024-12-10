@@ -15,27 +15,27 @@ export function Menu() {
                 <p className="h-10 mt-2 text-white">Sara Guaiume</p>
             </div>
             <nav className={`flex flex-col justify-start items-center gap-2`}>
-                <NavLink to="Home" className={estilo}>
+                <NavLink to="/Home" className={estilo}>
                     <Home />
                     Home
                 </NavLink>
-                <NavLink to="Curso" className={estilo}>
+                <NavLink to="/Curso" className={estilo}>
                     <School/>
                     Curso
                 </NavLink>
-                <NavLink to="Estudantes" className={estilo}>
+                <NavLink to="/Estudantes" className={estilo}>
                     <GraduationCap />
                     Estudantes
                 </NavLink>
-                <NavLink to="Pagamento" className={estilo}>
+                <NavLink to="/Pagamento" className={estilo}>
                     <CreditCard />
                     Pagamento
                 </NavLink>
-                <NavLink to="Forms" className={estilo}>
+                <NavLink to="/Forms" className={estilo}>
                     <FileSliders />
                     Forms
                 </NavLink>
-                <NavLink to="Configuracoes" className={estilo}>
+                <NavLink to="/Configuracoes" className={estilo}>
                     <Settings />
                     Configurações
                 </NavLink>

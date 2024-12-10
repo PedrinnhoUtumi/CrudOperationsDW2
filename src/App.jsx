@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login } from "./pages/Login";  // Certifique-se de que o caminho está correto
-import { Cadastro } from "./pages/Cadastro"; // Substitua com o componente de Cadastro
+import { Login } from "./pages/Login"; 
+import { Cadastro } from "./pages/Cadastro"; 
+import { Painel } from "./pages/Painel"; 
+import { Home } from "./pages/Home";
 
 function App() {
     return (
@@ -8,6 +10,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/Cadastro" element={<Cadastro />} />
+                <Route path="/Painel" element={<Painel />} />
+                <Route path="/Home" element={<Home />} />
+
             </Routes>
         </Router>
     );
