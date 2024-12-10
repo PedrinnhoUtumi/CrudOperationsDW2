@@ -5,16 +5,16 @@ export function Menu() {
     let estilo = `flex items-center gap-4 px-3 py-3 w-full text-sm text-roxoClaro hover:bg-verde hover:text-white `
     
     return (
-        <aside className="w-96 h-screen bg-azulMedio">
+        <aside className="min-w-72 h-screen bg-azulMedio">
             <header className=" flex justify-center items-center gap-2 bg-azulMedio text-white px-1 py-5 h-16 text-2xl font-black">
                 Menu
             </header>
 
-            <div className="mt-10 h-32 w-22 flex flex-col items-center">
+            <div className="mt-10 h-32 w-full flex flex-col items-center">
                 <img src="vite.svg" alt="" className="h-10"/>
                 <p className="h-10 mt-2 text-white">Sara Guaiume</p>
             </div>
-            <nav className={`flex flex-col justify-start items-center gap-2`}>
+            <nav className={`flex flex-col justify-start items-center gap-2 w-full`}>
                 <NavLink to="/Home" className={estilo}>
                     <Home />
                     Home

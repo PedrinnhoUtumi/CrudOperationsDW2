@@ -4,17 +4,25 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Cadastro } from "./pages/Cadastro";
 import { Home } from "./pages/Home";
+import { Estudantes } from "./pages/Estudantes";
 import { Layout } from "./pages/_Layout";
 import "./index.css"; 
 
 const rotas = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/Cadastro", element: <Cadastro /> },
+  { 
+    path: "/Estudantes", 
+    element: <Layout />, 
+    children: [
+      { path: "", element: <Estudantes /> },
+    ], 
+  },
   {
     path: "/Home",
     element: <Layout />, 
     children: [
-      { index: true, element: <Home /> }, 
+      { index: true, element: <Home /> },
       { path: "home", element: <Home /> },
     ],
   },
