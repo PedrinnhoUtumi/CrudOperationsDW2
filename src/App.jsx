@@ -3,17 +3,22 @@ import { Login } from "./pages/Login";
 import { Cadastro } from "./pages/Cadastro"; 
 import { Painel } from "./pages/Painel"; 
 import { Home } from "./pages/Home";
+import { Menu } from "./components/Menu";
 
 function App() {
     return (
         <Router> 
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/Cadastro" element={<Cadastro />} />
-                <Route path="/Painel" element={<Painel />} />
-                <Route path="/Home" element={<Home />} />
-
-            </Routes>
+            <div className="flex">
+                <Menu/>
+                <div className="flex-1 p-4">
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/Cadastro" element={<Cadastro />} />
+                    <Route path="/Painel" element={<Painel />} />
+                    <Route path="/Home" element={<Home />} />
+                </Routes>
+                </div>
+            </div>
         </Router>
     );
 }

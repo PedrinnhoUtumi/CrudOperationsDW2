@@ -2,13 +2,10 @@ import PropTypes from "prop-types";
 
 export function Pagina({ children }) {
     return (
-        <main
-            className={`
-            flex items-start flex-1 text-base text-custom-white
-        `}
-        >
+        <main>
             {children}
         </main>
+
     );
 }
 Pagina.propTypes = {

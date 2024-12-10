@@ -1,36 +1,35 @@
-// import {CreditCard, GraduationCap, Save,  Scales} from "lucide-react";
+import {CreditCard, FileSliders, GraduationCap, School, User} from "lucide-react";
 import { Pagina } from "../components/Pagina";
 
 export function Home() {
    
     return (
-        <Pagina titulo="home" subtitulo="home">
-            <div className="h-screen w-screen bg-red-700">
+        <Pagina>
+             <div className="flex flex-row justify-evenly mt-20">
+                <span className="w-64 h-40 flex flex-col items-start rounded-xl bg-blue-100">
+                <GraduationCap size={50} className="mb-2 text-blue-500 m-2"/>
+                    <p className="ml-2">Estudantes</p>
+                    <div className="text-bold text-black flex w-52 justify-end m-5 font-bold text-xl"><p>243</p></div>
+                </span>
 
-            </div>
-            {/* <div>
-                <span className="flex flex-col items-start">
-                    <GraduationCap/>
-                    Students
-                    <p className="text-bold text-black flex w-52 items-end">243</p>
-                    
+                <span className="w-64 h-40 flex flex-col items-start rounded-xl bg-purple-200">
+                    <School size={50} className="mb-2 text-purple-500 m-2"/>
+                    <p className="ml-2">Cursos</p>
+                    <div className="text-bold text-black flex w-52 justify-end m-5 font-bold text-xl"><p>13</p></div>
                 </span>
-                <span>
-                    <Save/>
-                    Curso
-                    <p className="text-bold text-black flex w-52 items-end">13</p>
+
+                <span className="w-64 h-40 flex flex-col items-start rounded-xl bg-green-100">
+                    <CreditCard size={50} className="mb-2 text-green-500 m-2"/>
+                    <p className="ml-2">Pagamentos</p>
+                    <div className="text-bold text-black flex w-52 justify-end m-5 font-bold text-xl"><p>556,00</p></div>
                 </span>
-                <span>
-                    <CreditCard/>
-                    Pagamentos
-                    <p className="text-bold text-black flex w-52 items-end">556,000</p>
+
+                <span className="w-64 h-40 flex flex-col items-start rounded-xl bg-gradient-to-tl from-pink-400 to-orange-500 h-screen">
+                    <User size={50} className="mb-2 text-white m-2"/>
+                    <p className="ml-2 text-white">Usuários</p>
+                    <div className="text-bold text-black flex w-52 justify-end m-5 font-bold text-xl"><p>3</p></div>
                 </span>
-                <span>
-                    <Scales />
-                    Usuários 
-                    <p className="text-bold text-black flex w-52 items-end">3</p>
-                </span>
-            </div> */}
+            </div> 
       </Pagina>
 
     )
