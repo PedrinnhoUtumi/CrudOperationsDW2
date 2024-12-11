@@ -5,43 +5,45 @@ import { ArrowUpDown, CircleArrowLeft, Pencil, Trash2 } from "lucide-react"
 
 export function Estudantes() {
     const navigate = useNavigate()
-    const [usuarios, setUsuarios] = useState([]) 
+    const [usuarios, setUsuarios] = useState([])
     const [cadastroAberto, setCadastroAberto] = useState(false)
-    const [novoUsuario, setNovoUsuario] = useState({ id: "", nome: "", email: "" })
+    const [editaUsuario, setEditaUsuario] = useState(null)
+    const [novoUsuario, setNovoUsuario] = useState({ nome: "", email: "", celular: "" })
     const [erro, setErro] = useState(null)
 
     const voltaParaHome = (e) => {
         e.preventDefault()
         navigate("/Home")
     }
-    
+
     useEffect(() => {
         const fetchUsuarios = async () => {
-          try {
-            const response = await fetch("http://localhost:3333/usuarios")
-            if (!response.ok) {
-              throw new Error("Erro ao buscar os usuários")
+            try {
+                const response = await fetch("http://localhost:3333/usuarios")
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar os usuários")
+                }
+                const data = await response.json()
+                setUsuarios(data)
+            } catch (error) {
+                setErro(error.message)
             }
-            const data = await response.json()
-            setUsuarios(data)
-          } catch (error) {
-            setErro(error.message) 
-          }
         }
-    
-        fetchUsuarios() 
-      }, []) 
 
-      const deleteDoBD = async (id) => {
+        fetchUsuarios()
+    }, [])
+
+    async function deleteBD(id) {
         try {
             const response = await fetch(`http://localhost:3333/usuarios/${id}`, {
                 method: "DELETE",
             })
-    
+
             if (!response.ok) {
-                throw new Error("Erro ao excluir o estudante.")
+                console.log(response);
+                // ("Erro ao excluir o estudante.")
             }
-    
+
             setUsuarios((prevUsuarios) => prevUsuarios.filter((user) => user.id !== id))
             alert("Usuário excluído com sucesso!")
         } catch (error) {
@@ -49,24 +51,55 @@ export function Estudantes() {
             alert("Erro ao excluir o usuário.")
         }
     }
-      const criaNoBD = async () => {
+    async function createBD() {
         try {
-            const response = await fetch(`https://trabalhofinal-3.onrender.com`, {
+            const response = await fetch(`http://localhost:3333/usuarios`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(novoUsuario),
             })
-    
+
             if (!response.ok) {
-                throw new Error("Erro ao excluir o estudante.")
+                console.log(response);
+
             }
-            
+
             const dados = await response.json()
+            console.log(dados);
 
             setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
-            setNovoUsuario({ id: "", nome: "", email: "" })
+            setNovoUsuario({ nome: "", email: "", celular: "" })
+            alert("Usuário adicionado com sucesso!")
+        } catch (error) {
+            console.error(error)
+            alert("Erro ao criar o usuário.")
+        }
+    }
+
+    async function updateBD() {
+        try {
+            const response = await fetch(`http://localhost:3333/usuarios/${editaUsuario.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(novoUsuario),
+            })
+
+            if (!response.ok) {
+                console.log(response);
+
+            }
+
+            setUsuarios((prevUsuarios) =>
+                prevUsuarios.map((usuario) =>
+                    usuario.id === editaUsuario.id ? { ...usuario, ...novoUsuario } : usuario
+                )
+            )
+
+            setEditaUsuario(null)
             alert("Usuário adicionado com sucesso!")
         } catch (error) {
             console.error(error)
@@ -76,6 +109,10 @@ export function Estudantes() {
 
     function podeCriar() {
         setCadastroAberto(true)
+    }
+    function podeEditar(usuario) {
+        setEditaUsuario(usuario)
+        setNovoUsuario({ nome: usuario.nome, email: usuario.email, celular: usuario.celular })
     }
 
     return (
@@ -98,63 +135,90 @@ export function Estudantes() {
                             </button>
                         </div>
                     </header>
-
                     {
-                    cadastroAberto && (
-
-                    <div className="p-4">
-                        <h2 className="text-xl mb-4">Adicionar Novo Estudante</h2>
-                        <div className="flex gap-4">
+                    editaUsuario && (
+                        <div>
+                            <h2 className="text-xl mb-4">Editar Usuário</h2>
                             <input
                                 type="text"
-                                placeholder="ID"
-                                value={novoUsuario.id}
-                                onChange={(e) => setNovoUsuario({ ...novoUsuario, id: e.target.value })}
-                                className="p-2 border border-gray-300 rounded w-1/3"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Nome"
                                 value={novoUsuario.nome}
                                 onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
-                                className="p-2 border border-gray-300 rounded w-1/3"
+                                className="p-2 border border-gray-300 rounded w-1/4 m-3"
+                                placeholder="Nome"
                             />
                             <input
                                 type="email"
-                                placeholder="Email"
                                 value={novoUsuario.email}
                                 onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
-                                className="p-2 border border-gray-300 rounded w-1/3"
+                                className="p-2 border border-gray-300 rounded w-1/4 m-3"
+                                placeholder="Email"
                             />
-                            <button
-                                onClick={criaNoBD}
-                                className="bg-green-500 text-white px-4 py-2 rounded"
-                            >
-                                Adicionar
-                            </button>
+                            <input
+                                type="text"
+                                value={novoUsuario.celular}
+                                onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
+                                className="p-2 border border-gray-300 rounded w-1/4 m-3"
+                                placeholder="Celular"
+                            />
+                            <button className="bg-verde text-white px-4 py-2 m-3 rounded" onClick={updateBD}>Salvar</button>
                         </div>
-                    </div>
-                    )
+                    )}
+                    {
+                        cadastroAberto && (
+
+                            <div className="p-4">
+                                <h2 className="text-xl mb-4">Adicionar Novo Estudante</h2>
+                                <div className="flex gap-4">
+                                    <input
+                                        type="text"
+                                        placeholder="Celular"
+                                        value={novoUsuario.celular}
+                                        onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
+                                        className="p-2 border border-gray-300 rounded w-1/3"
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Nome"
+                                        value={novoUsuario.nome}
+                                        onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
+                                        className="p-2 border border-gray-300 rounded w-1/3"
+                                    />
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        value={novoUsuario.email}
+                                        onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
+                                        className="p-2 border border-gray-300 rounded w-1/3"
+                                    />
+                                    <button
+                                        onClick={createBD}
+                                        className="bg-verde text-white px-4 py-2 rounded"
+                                    >
+                                        Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                        )
                     }
 
                     <table className="min-w-full table-auto border-collapse">
                         <thead>
                             <tr>
-                                <th className="border px-4 py-2">ID</th>
                                 <th className="border px-4 py-2">Nome</th>
                                 <th className="border px-4 py-2">Email</th>
+                                <th className="border px-4 py-2">Celular</th>
                                 <th className="border px-4 py-2">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {usuarios.map((dado) => (
-                                <tr key={dado.id}>
-                                    <td className="border px-4 py-2">{dado.id}</td>
-                                    <td className="border px-4 py-2">{dado.nome}</td>
-                                    <td className="border px-4 py-2">{dado.email}</td>
+                            {usuarios.map((user) => (
+                                <tr key={user.id}>
+                                    <td className="border px-4 py-2">{user.nome}</td>
+                                    <td className="border px-4 py-2">{user.email}</td>
+                                    <td className="border px-4 py-2">{user.celular}</td>
                                     <td className="border px-4 py-2 flex justify-evenly ">
-                                        <Pencil className="cursor-pointer" />
-                                        <Trash2 className="cursor-pointer" onClick={() => deleteDoBD(dado.id)} />
+                                        <Pencil className="cursor-pointer" onClick={() => podeEditar(user)} />
+                                        <Trash2 className="cursor-pointer" onClick={() => deleteBD(user.id)} />
                                     </td>
                                 </tr>
                             ))}

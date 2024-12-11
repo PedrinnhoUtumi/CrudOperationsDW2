@@ -7,6 +7,7 @@ import { Home } from "./pages/Home";
 import { Estudantes } from "./pages/Estudantes";
 import { Layout } from "./pages/_Layout";
 import "./index.css"; 
+import { Pagamento } from "./pages/Pagamento";
 
 const rotas = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -16,6 +17,13 @@ const rotas = createBrowserRouter([
     element: <Layout />, 
     children: [
       { path: "", element: <Estudantes /> },
+    ], 
+  },
+  { 
+    path: "/Pagamento", 
+    element: <Layout />, 
+    children: [
+      { path: "", element: <Pagamento /> },
     ], 
   },
   {
