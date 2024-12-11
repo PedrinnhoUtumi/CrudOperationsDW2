@@ -107,7 +107,7 @@ export function Estudantes() {
         }
     }
 
-    const filteredUsuarios = usuarios.filter(usuario => 
+    const selectBD = usuarios.filter(usuario => 
         usuario.nome.toLowerCase().includes(procura.toLowerCase())
     );
 
@@ -215,7 +215,7 @@ export function Estudantes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredUsuarios.map((user) => (
+                            {selectBD.map((user) => (
                                 <tr key={user.id}>
                                     <td className="border px-4 py-2">{user.nome}</td>
                                     <td className="border px-4 py-2">{user.email}</td>
