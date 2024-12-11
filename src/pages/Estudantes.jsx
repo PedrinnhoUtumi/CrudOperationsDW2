@@ -45,14 +45,21 @@ export function Estudantes() {
             }
 
             setUsuarios((prevUsuarios) => prevUsuarios.filter((user) => user.id !== id))
-            alert("Usuário excluído com sucesso!")
         } catch (error) {
             console.error(error)
-            alert("Erro ao excluir o usuário.")
         }
     }
-    async function createBD() {
+    async function createBD(e) {
+        e.preventDefault();
+
         try {
+            if (!novoUsuario.nome || !novoUsuario.email || !novoUsuario.celular) {
+                alert("Preencha todos os campos!");
+                return;
+            }            
+
+            console.log(novoUsuario);
+
             const response = await fetch(`http://localhost:3333/usuarios`, {
                 method: "POST",
                 headers: {
@@ -62,19 +69,17 @@ export function Estudantes() {
             })
 
             if (!response.ok) {
-                console.log(response);
-
+                throw new Error(`Erro ao criar usuário: ${response.statusText}`);
             }
+            
 
             const dados = await response.json()
             console.log(dados);
 
             setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
-            setNovoUsuario({ nome: "", email: "", celular: "" })
             alert("Usuário adicionado com sucesso!")
         } catch (error) {
             console.error(error)
-            alert("Erro ao criar o usuário.")
         }
     }
 

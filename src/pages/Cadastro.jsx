@@ -1,47 +1,55 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export function Cadastro() {
-    const [responseMessage, setResponseMessage] = useState('')
+    const [usuarios, setUsuarios] = useState([])
+    const navigate = useNavigate();
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
-    const enviaFormulario = async (event) =>  {
-        event.preventDefault()
-        
-        const formData = {
-            nome: nome,
-            email: email,
-            senha: senha,
-        }
-
+    const [celular, setCelular] = useState('')
+    const [novoUsuario, setNovoUsuario] = useState({ nome: '', email: '', celular: '' })
+    async function enviaFormulario(e) {
+        e.preventDefault();
+        setNovoUsuario({ nome, email, celular });
         try {
-            const response = await fetch('http://localhost:3333/usuarios', {
-                method: 'POST', 
+            const response = await fetch("http://localhost:3333/usuarios", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                }, 
-                body: JSON.stringify(formData),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ nome, email, celular }),
             })
 
             if (!response.ok) {
-                console.error("erro ao enviar dados!", response.status)
-                return
+                console.log(response);
+
             }
-            const data = await response.json()
-            setResponseMessage(data.message);
+
+            const textoResposta = await response.text();
+            const dados = textoResposta ? JSON.parse(textoResposta) : null;
+
+            if (dados) {
+                setUsuarios((prevUsuarios) => [...prevUsuarios, dados]);
+                setNome("");  
+                setEmail("");
+                setCelular("");
+                navigate('/home');
+            }
+
+            navigate('/home');
+            alert("Usuário adicionado com sucesso!")
         } catch (error) {
-            // 
-            console.error('Erro na requisição', error)
-            setResponseMessage('Erro ao enviar dados.')
-          }
+            console.error(error)
+            alert("Erro ao criar o usuário.")
         }
+    }
     return (
         <div className=" w-screen h-screen bg-azulEscuro flex flex-row justify-evenly items-center">
             <div className="w-1/2 h-full flex ">
                 <img src="vector-cadastro.svg" alt="imagem aqui" />
             </div>
-            <form action="" className="bg-azulMedio text-white w-1/3 h-[80%] flex flex-col items-center justify-center rounded-3xl">
+            <form onSubmit={enviaFormulario} action="" method='POST' className="bg-azulMedio text-white w-1/3 h-[80%] flex flex-col items-center justify-center rounded-3xl">
                 <h1 className="text-verde text-3xl font-bold">Cadastro</h1>
                 <div className="w-full flex flex-col items-center mb-4">
                     <div className="relative w-10/12">
@@ -51,7 +59,7 @@ export function Cadastro() {
                             id="usuario"
                             className="p-3 w-full bg-azulEscuro rounded-md"
                             placeholder="Digite seu suário"
-                            value = {nome}
+                            value={nome}
                             onChange={(e) => setNome(e.target.value)}
                         />
                     </div>
@@ -64,25 +72,25 @@ export function Cadastro() {
                             id="email"
                             className="p-3 w-full bg-azulEscuro rounded-md"
                             placeholder="Digite seu email"
-                            value = {email}
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                 </div>
                 <div className="w-full flex flex-col items-center mb-4">
                     <div className="relative w-10/12">
-                        <label htmlFor="" className="text-2xl">Senha</label>
+                        <label htmlFor="" className="text-2xl">Celular</label>
                         <input
-                            type="password"
-                            id="senha"
+                            type="text"
+                            id="celular"
                             className="p-3 w-full bg-azulEscuro rounded-md"
-                            placeholder="Digite sua senha"
-                            value = {senha}
-                            onChange={(e) => setSenha(e.target.value)}
+                            placeholder="Digite seu celular"
+                            value={celular}
+                            onChange={(e) => setCelular(e.target.value)}
                         />
                     </div>
                 </div>
-                <button className="bg-verde mt-8 p-3 w-10/12 rounded-md text-white">CADASTRE-SE</button>
+                <button className="bg-verde mt-8 p-3 w-10/12 rounded-md text-white" type="submit" >CADASTRE-SE</button>
             </form>
         </div>
     )
