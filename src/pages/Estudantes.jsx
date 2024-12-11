@@ -8,8 +8,8 @@ export function Estudantes() {
     const [usuarios, setUsuarios] = useState([])
     const [cadastroAberto, setCadastroAberto] = useState(false)
     const [editaUsuario, setEditaUsuario] = useState(null)
+    const [procura, setProcura] = useState("")
     const [novoUsuario, setNovoUsuario] = useState({ nome: "", email: "", celular: "" })
-    const [erro, setErro] = useState(null)
 
     const voltaParaHome = (e) => {
         e.preventDefault()
@@ -26,7 +26,7 @@ export function Estudantes() {
                 const data = await response.json()
                 setUsuarios(data)
             } catch (error) {
-                setErro(error.message)
+                console.log(error.message)
             }
         }
 
@@ -107,6 +107,10 @@ export function Estudantes() {
         }
     }
 
+    const filteredUsuarios = usuarios.filter(usuario => 
+        usuario.nome.toLowerCase().includes(procura.toLowerCase())
+    );
+
     function podeCriar() {
         setCadastroAberto(true)
     }
@@ -120,7 +124,7 @@ export function Estudantes() {
             <div className="flex flex-col">
                 <header className="w-full h-10 p-8 flex flex-row justify-between items-center bg-verde">
                     <CircleArrowLeft onClick={voltaParaHome} className="cursor-pointer text-azulMedio" />
-                    <input type="text" placeholder="Search" className="p-2 border border-solid border-azulMedio bg-azulMedio text-verde rounded" />
+                    <input type="text" placeholder="Search" className="p-2 border border-solid border-azulMedio bg-azulMedio text-verde rounded" onChange={(e) => setProcura(e.target.value)} />
                 </header>
                 <div className="bg-cinzaClaro flex flex-col w-full h-[90vh]">
                     <header className="flex flex-row justify-between w-full">
@@ -211,7 +215,7 @@ export function Estudantes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {usuarios.map((user) => (
+                            {filteredUsuarios.map((user) => (
                                 <tr key={user.id}>
                                     <td className="border px-4 py-2">{user.nome}</td>
                                     <td className="border px-4 py-2">{user.email}</td>
