@@ -5,14 +5,46 @@ export function Login() {
     const navigate = useNavigate()  
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-
-    const handleLogin = (e) => {
-        e.preventDefault() 
-        navigate("/Home")
-
-    }
-
+    const [celular, setCelular] = useState('')
+    const handleLogin = async (e) => {
+        e.preventDefault();
     
+        try {
+            // Construa a URL com parâmetros de consulta
+            const queryParams = new URLSearchParams({ nome, email, celular }).toString();
+            const response = await fetch(`http://localhost:3333/usuarios?${queryParams}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (!response.ok) {
+                if (response.status === 404) {
+                    alert("Usuário não encontrado");
+                } else {
+                    alert("Erro ao conectar ao servidor.");
+                }
+                return;
+            }
+    
+            const data = await response.json();
+            console.log(data);
+            
+            if (data.length > 0) {
+                navigate('/home');
+            } else {
+                e.preventDefault()
+                alert("Erro ao encontrar usuário! Tente novamente")
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao conectar ao servidor.");
+        }
+    };
+    
+
     return (
         <div className="w-screen h-screen bg-azulEscuro flex flex-row justify-evenly items-center">
             <div className="w-1/2 h-full flex ">
@@ -31,6 +63,21 @@ export function Login() {
                             placeholder="Digite seu usuário"
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="w-full flex flex-col items-center mb-4">
+                    <div className="relative w-10/12">
+                        <label htmlFor="" className="text-2xl">Celular</label>
+                        <input
+                            required
+                            type="text"
+                            id="celular"
+                            className="p-3 w-full bg-azulEscuro rounded-md"
+                            placeholder="Digite seu usuário"
+                            value={celular}
+                            onChange={(e) => setCelular(e.target.value)}
                         />
                     </div>
                 </div>

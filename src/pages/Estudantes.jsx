@@ -31,7 +31,7 @@ export function Estudantes() {
         }
 
         fetchUsuarios()
-    }, [])
+    }, [usuarios])
 
     async function deleteBD(id) {
         try {
@@ -56,7 +56,7 @@ export function Estudantes() {
             if (!novoUsuario.nome || !novoUsuario.email || !novoUsuario.celular) {
                 alert("Preencha todos os campos!");
                 return;
-            }            
+            }
 
             console.log(novoUsuario);
 
@@ -71,13 +71,14 @@ export function Estudantes() {
             if (!response.ok) {
                 throw new Error(`Erro ao criar usuário: ${response.statusText}`);
             }
-            
+
 
             const dados = await response.json()
             console.log(dados);
 
             setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
-            alert("Usuário adicionado com sucesso!")
+            
+            setCadastroAberto(null)
         } catch (error) {
             console.error(error)
         }
@@ -94,8 +95,7 @@ export function Estudantes() {
             })
 
             if (!response.ok) {
-                console.log(response);
-
+                throw new Error(`Erro ao editar usuário: ${response.statusText}`);
             }
 
             setUsuarios((prevUsuarios) =>
@@ -112,7 +112,7 @@ export function Estudantes() {
         }
     }
 
-    const selectBD = usuarios.filter(usuario => 
+    const selectBD = usuarios.filter(usuario =>
         usuario.nome.toLowerCase().includes(procura.toLowerCase())
     );
 
@@ -145,37 +145,37 @@ export function Estudantes() {
                         </div>
                     </header>
                     {
-                    editaUsuario && (
-                        <div>
-                            <h2 className="text-xl mb-4">Editar Usuário</h2>
-                            <input
-                                type="text"
-                                value={novoUsuario.nome}
-                                onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
-                                className="p-2 border border-gray-300 rounded w-1/4 m-3"
-                                placeholder="Nome"
-                            />
-                            <input
-                                type="email"
-                                value={novoUsuario.email}
-                                onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
-                                className="p-2 border border-gray-300 rounded w-1/4 m-3"
-                                placeholder="Email"
-                            />
-                            <input
-                                type="text"
-                                value={novoUsuario.celular}
-                                onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
-                                className="p-2 border border-gray-300 rounded w-1/4 m-3"
-                                placeholder="Celular"
-                            />
-                            <button className="bg-verde text-white px-4 py-2 m-3 rounded" onClick={updateBD}>Salvar</button>
-                        </div>
-                    )}
+                        editaUsuario && (
+                            <div>
+                                <h2 className="text-xl mb-4">Editar Usuário</h2>
+                                <input
+                                    type="text"
+                                    value={novoUsuario.nome}
+                                    onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
+                                    className="p-2 border border-gray-300 rounded w-1/4 m-3"
+                                    placeholder="Nome"
+                                />
+                                <input
+                                    type="email"
+                                    value={novoUsuario.email}
+                                    onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
+                                    className="p-2 border border-gray-300 rounded w-1/4 m-3"
+                                    placeholder="Email"
+                                />
+                                <input
+                                    type="text"
+                                    value={novoUsuario.celular}
+                                    onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
+                                    className="p-2 border border-gray-300 rounded w-1/4 m-3"
+                                    placeholder="Celular"
+                                />
+                                <button type="submit" className="bg-verde text-white px-4 py-2 m-3 rounded" onClick={updateBD}>Salvar</button>
+                            </div>
+                        )}
                     {
                         cadastroAberto && (
 
-                            <div className="p-4">
+                            <form onSubmit={createBD} className="p-4">
                                 <h2 className="text-xl mb-4">Adicionar Novo Estudante</h2>
                                 <div className="flex gap-4">
                                     <input
@@ -200,39 +200,41 @@ export function Estudantes() {
                                         className="p-2 border border-gray-300 rounded w-1/3"
                                     />
                                     <button
-                                        onClick={createBD}
                                         className="bg-verde text-white px-4 py-2 rounded"
                                     >
                                         Adicionar
                                     </button>
                                 </div>
-                            </div>
+                            </form>
                         )
                     }
 
-                    <table className="min-w-full table-auto border-collapse">
-                        <thead>
-                            <tr>
-                                <th className="border px-4 py-2">Nome</th>
-                                <th className="border px-4 py-2">Email</th>
-                                <th className="border px-4 py-2">Celular</th>
-                                <th className="border px-4 py-2">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {selectBD.map((user) => (
-                                <tr key={user.id}>
-                                    <td className="border px-4 py-2">{user.nome}</td>
-                                    <td className="border px-4 py-2">{user.email}</td>
-                                    <td className="border px-4 py-2">{user.celular}</td>
-                                    <td className="border px-4 py-2 flex justify-evenly ">
-                                        <Pencil className="cursor-pointer" onClick={() => podeEditar(user)} />
-                                        <Trash2 className="cursor-pointer" onClick={() => deleteBD(user.id)} />
-                                    </td>
+                    <div className="overflow-x-auto max-h-96">
+                        <table className="min-w-full table-auto border-collapse">
+                            <thead>
+                                <tr>
+                                    <th className="border px-4 py-2">Nome</th>
+                                    <th className="border px-4 py-2">Email</th>
+                                    <th className="border px-4 py-2">Celular</th>
+                                    <th className="border px-4 py-2">Ação</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {selectBD.map((user) => (
+                                    <tr key={user.id}>
+                                        <td className="border px-4 py-2">{user.nome}</td>
+                                        <td className="border px-4 py-2">{user.email}</td>
+                                        <td className="border px-4 py-2">{user.celular}</td>
+                                        <td className="border px-4 py-2 flex justify-evenly">
+                                            <Pencil className="cursor-pointer" onClick={() => podeEditar(user)} />
+                                            <Trash2 className="cursor-pointer" onClick={() => deleteBD(user.id)} />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </Pagina>

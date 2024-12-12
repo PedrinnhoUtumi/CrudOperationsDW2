@@ -11,7 +11,7 @@ export function Menu() {
             </header>
 
             <div className="mt-10 h-32 w-full flex flex-col items-center">
-                <img src="vite.svg" alt="" className="h-10"/>
+                <img src="Capivara.jpeg" alt="" className="h-24 rounded-full"/>
                 <p className="h-10 mt-2 text-white">Sara Guaiume</p>
             </div>
             <nav className={`flex flex-col justify-start items-center gap-2 w-full`}>

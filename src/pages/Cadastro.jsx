@@ -55,6 +55,7 @@ export function Cadastro() {
                     <div className="relative w-10/12">
                         <label htmlFor="" className="text-2xl">Usuário</label>
                         <input
+                            required
                             type="text"
                             id="usuario"
                             className="p-3 w-full bg-azulEscuro rounded-md"
@@ -68,6 +69,7 @@ export function Cadastro() {
                     <div className="relative w-10/12">
                         <label htmlFor="" className="text-2xl">Email</label>
                         <input
+                            required
                             type="email"
                             id="email"
                             className="p-3 w-full bg-azulEscuro rounded-md"
@@ -81,6 +83,7 @@ export function Cadastro() {
                     <div className="relative w-10/12">
                         <label htmlFor="" className="text-2xl">Celular</label>
                         <input
+                            required
                             type="text"
                             id="celular"
                             className="p-3 w-full bg-azulEscuro rounded-md"
