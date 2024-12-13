@@ -10,8 +10,8 @@ export function Login() {
         e.preventDefault()
     
         try {
-            const queryParams = new URLSearchParams({ nome, email, celular }).toString()
-            const response = await fetch(`http://localhost:3333/usuarios?${queryParams}`, {
+            const queryParametros = new URLSearchParams({ nome, email, celular }).toString()
+            const response = await fetch(`https://trabalhofinal-pqt8.onrender.com/usuarios?${queryParametros}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -28,13 +28,13 @@ export function Login() {
             }
     
             const data = await response.json()
-            console.log(data)
             
             if (data.length > 0) {
                 navigate('/home')
+                console.log(data)
+                console.log(data.length)
             } else {
-                e.preventDefault()
-                alert("Erro ao encontrar usuário! Tente novamente")
+               alert("Erro ao encontrar usuário! Tente novamente")
             }
 
         } catch (error) {
@@ -100,7 +100,7 @@ export function Login() {
                         Não tem conta? Clique aqui
                     </Link>
                 </div>
-                <button className="bg-verde mt-8 p-3 w-10/12 rounded-md text-white">ENTRAR</button>
+                <button type="submit" className="bg-verde mt-8 p-3 w-10/12 rounded-md text-white">ENTRAR</button>
             </form>
         </div>
     )

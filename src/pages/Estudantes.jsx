@@ -19,7 +19,7 @@ export function Estudantes() {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const response = await fetch("http://localhost:3333/usuarios")
+                const response = await fetch("https://trabalhofinal-pqt8.onrender.com/usuarios")
                 if (!response.ok) {
                     throw new Error("Erro ao buscar os usuários")
                 }
@@ -35,7 +35,7 @@ export function Estudantes() {
 
     async function deleteBD(id) {
         try {
-            const response = await fetch(`http://localhost:3333/usuarios/${id}`, {
+            const response = await fetch(`https://trabalhofinal-pqt8.onrender.com/usuarios/${id}`, {
                 method: "DELETE",
             })
 
@@ -59,7 +59,7 @@ export function Estudantes() {
 
             console.log(novoUsuario)
 
-            const response = await fetch(`http://localhost:3333/usuarios`, {
+            const response = await fetch(`https://trabalhofinal-pqt8.onrender.com/usuarios`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export function Estudantes() {
 
     async function updateBD() {
         try {
-            const response = await fetch(`http://localhost:3333/usuarios/${editaUsuario.id}`, {
+            const response = await fetch(`https://trabalhofinal-pqt8.onrender.com/usuarios/${editaUsuario.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

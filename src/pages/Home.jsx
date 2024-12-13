@@ -9,7 +9,7 @@ export function Home() {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const response = await fetch("http://localhost:3333/usuarios")
+                const response = await fetch("https://trabalhofinal-pqt8.onrender.com/usuarios")
                 if (!response.ok) {
                     throw new Error("Erro ao buscar os usuários")
                 }

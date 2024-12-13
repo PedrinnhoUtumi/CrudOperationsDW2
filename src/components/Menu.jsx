@@ -39,7 +39,6 @@ export function Menu() {
                     <Settings />
                     Configurações
                 </NavLink>
-                <span className="pt-4 pl-3 text-xs text-zinc-500">Sair</span>
                 <NavLink to="/" className={estilo}>
                     <LogOutIcon />
                     Logout

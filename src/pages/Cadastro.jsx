@@ -13,7 +13,7 @@ export function Cadastro() {
         e.preventDefault()
         setNovoUsuario({ nome, email, celular })
         try {
-            const response = await fetch("http://localhost:3333/usuarios", {
+            const response = await fetch("https://trabalhofinal-pqt8.onrender.com/usuarios", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export function Cadastro() {
             })
 
             if (!response.ok) {
-                console.log(response)
+                throw new Error(response)
 
             }
 
@@ -34,11 +34,10 @@ export function Cadastro() {
                 setNome("")  
                 setEmail("")
                 setCelular("")
-                navigate('/home')
             }
 
             navigate('/home')
-            alert("Usuário adicionado com sucesso!")
+
         } catch (error) {
             console.error(error)
             alert("Erro ao criar o usuário.")
