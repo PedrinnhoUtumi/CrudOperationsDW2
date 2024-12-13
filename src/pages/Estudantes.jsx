@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Pagina } from "../components/Pagina"
-import { ArrowUpDown, CircleArrowLeft, Pencil, Trash2 } from "lucide-react"
+import { CircleArrowLeft, Pencil, Trash2 } from "lucide-react"
 
 export function Estudantes() {
     const navigate = useNavigate()
@@ -77,7 +77,7 @@ export function Estudantes() {
             console.log(dados);
 
             setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
-            
+
             setCadastroAberto(null)
         } catch (error) {
             console.error(error)
@@ -135,7 +135,6 @@ export function Estudantes() {
                     <header className="flex flex-row justify-between w-full">
                         <h1 className="p-3 flex flex-row items-center text-3xl">Lista de Estudantes</h1>
                         <div className="p-3 flex flex-row items-center gap-5">
-                            <ArrowUpDown className="border border-black bg-azulMedio w-10 h-10 p-2 text-verde rounded-full" />
                             <button
                                 className="w-52 h-10 bg-azulMedio text-verde rounded-md"
                                 onClick={podeCriar}
@@ -146,30 +145,34 @@ export function Estudantes() {
                     </header>
                     {
                         editaUsuario && (
-                            <div>
+                            <div className="p-4">
                                 <h2 className="text-xl mb-4">Editar Usuário</h2>
-                                <input
-                                    type="text"
-                                    value={novoUsuario.nome}
-                                    onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
-                                    className="p-2 border border-gray-300 rounded w-1/4 m-3"
-                                    placeholder="Nome"
-                                />
-                                <input
-                                    type="email"
-                                    value={novoUsuario.email}
-                                    onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
-                                    className="p-2 border border-gray-300 rounded w-1/4 m-3"
-                                    placeholder="Email"
-                                />
-                                <input
-                                    type="text"
-                                    value={novoUsuario.celular}
-                                    onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
-                                    className="p-2 border border-gray-300 rounded w-1/4 m-3"
-                                    placeholder="Celular"
-                                />
-                                <button type="submit" className="bg-verde text-white px-4 py-2 m-3 rounded" onClick={updateBD}>Salvar</button>
+                                <div className="flex gap-4">
+
+                                    <input
+                                        type="text"
+                                        value={novoUsuario.nome}
+                                        onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
+                                        className="p-2 border border-gray-300 rounded w-1/3"
+                                        placeholder="Digite seu nome"
+                                    />
+                                    <input
+                                        type="email"
+                                        value={novoUsuario.email}
+                                        onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
+                                        className="p-2 border border-gray-300 rounded w-1/3"
+                                        placeholder="Digite seu email"
+                                    />
+                                    <input
+                                        type="tel"
+                                        placeholder="Digite seu celular (44-12345-6789)"
+                                        pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
+                                        value={novoUsuario.celular}
+                                        onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
+                                        className="p-2 border border-gray-300 rounded w-1/3"
+                                    />
+                                    <button type="submit" className="bg-verde text-white px-4 py-2 rounded w-[106px]" onClick={updateBD}>Salvar</button>
+                                </div>
                             </div>
                         )}
                     {
@@ -179,28 +182,30 @@ export function Estudantes() {
                                 <h2 className="text-xl mb-4">Adicionar Novo Estudante</h2>
                                 <div className="flex gap-4">
                                     <input
-                                        type="text"
-                                        placeholder="Celular"
+                                        type="tel"
+                                        placeholder="Digite seu celular (44-12345-6789)"
+                                        pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
+
                                         value={novoUsuario.celular}
                                         onChange={(e) => setNovoUsuario({ ...novoUsuario, celular: e.target.value })}
                                         className="p-2 border border-gray-300 rounded w-1/3"
                                     />
                                     <input
                                         type="text"
-                                        placeholder="Nome"
+                                        placeholder="Digite seu nome"
                                         value={novoUsuario.nome}
                                         onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })}
                                         className="p-2 border border-gray-300 rounded w-1/3"
                                     />
                                     <input
                                         type="email"
-                                        placeholder="Email"
+                                        placeholder="Digite seu email"
                                         value={novoUsuario.email}
                                         onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })}
                                         className="p-2 border border-gray-300 rounded w-1/3"
                                     />
                                     <button
-                                        className="bg-verde text-white px-4 py-2 rounded"
+                                        className="bg-verde text-white px-4 py-2 rounded w-24"
                                     >
                                         Adicionar
                                     </button>

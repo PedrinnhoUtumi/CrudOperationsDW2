@@ -1,4 +1,4 @@
-import {CreditCard, FileSliders, GraduationCap, Home, School, Settings} from "lucide-react";
+import {CreditCard, FileSliders, GraduationCap, Home, LogOutIcon, School, Settings} from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export function Menu() {
@@ -10,7 +10,7 @@ export function Menu() {
                 Menu
             </header>
 
-            <div className="mt-10 h-32 w-full flex flex-col items-center">
+            <div className="mt-5 h-32 w-full flex flex-col items-center">
                 <img src="Capivara.jpeg" alt="" className="h-24 rounded-full"/>
                 <p className="h-10 mt-2 text-white">Sara Guaiume</p>
             </div>
@@ -38,6 +38,11 @@ export function Menu() {
                 <NavLink to="/Configuracoes" className={estilo}>
                     <Settings />
                     Configurações
+                </NavLink>
+                <span className="pt-4 pl-3 text-xs text-zinc-500">Sair</span>
+                <NavLink to="/" className={estilo}>
+                    <LogOutIcon />
+                    Logout
                 </NavLink>
             </nav>
         </aside>

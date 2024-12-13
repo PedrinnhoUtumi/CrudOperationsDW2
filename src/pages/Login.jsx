@@ -72,10 +72,11 @@ export function Login() {
                         <label htmlFor="" className="text-2xl">Celular</label>
                         <input
                             required
-                            type="text"
+                            type="tel"
+                            placeholder="Digite seu celular (44-12345-6789)"
+                            pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
                             id="celular"
                             className="p-3 w-full bg-azulEscuro rounded-md"
-                            placeholder="Digite seu usuário"
                             value={celular}
                             onChange={(e) => setCelular(e.target.value)}
                         />
