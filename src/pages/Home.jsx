@@ -1,7 +1,7 @@
-import { CreditCard, GraduationCap, School, User } from "lucide-react";
-import { Pagina } from "../components/Pagina";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { CreditCard, GraduationCap, School, User } from "lucide-react"
+import { Pagina } from "../components/Pagina"
+import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 export function Home() {
     const [usuarios, setUsuarios] = useState(0)

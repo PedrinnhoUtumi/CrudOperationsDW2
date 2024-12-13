@@ -1,5 +1,5 @@
-import {CreditCard, FileSliders, GraduationCap, Home, LogOutIcon, School, Settings} from "lucide-react";
-import { NavLink } from "react-router-dom";
+import {CreditCard, FileSliders, GraduationCap, Home, LogOutIcon, School, Settings} from "lucide-react"
+import { NavLink } from "react-router-dom"
 
 export function Menu() {
     let estilo = `flex items-center gap-4 px-3 py-3 w-full text-sm text-roxoClaro hover:bg-verde hover:text-white `

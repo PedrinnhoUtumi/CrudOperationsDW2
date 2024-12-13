@@ -40,8 +40,7 @@ export function Estudantes() {
             })
 
             if (!response.ok) {
-                console.log(response);
-                // ("Erro ao excluir o estudante.")
+                console.log(response)
             }
 
             setUsuarios((prevUsuarios) => prevUsuarios.filter((user) => user.id !== id))
@@ -50,15 +49,15 @@ export function Estudantes() {
         }
     }
     async function createBD(e) {
-        e.preventDefault();
+        e.preventDefault()
 
         try {
             if (!novoUsuario.nome || !novoUsuario.email || !novoUsuario.celular) {
-                alert("Preencha todos os campos!");
-                return;
+                alert("Preencha todos os campos!")
+                return
             }
 
-            console.log(novoUsuario);
+            console.log(novoUsuario)
 
             const response = await fetch(`http://localhost:3333/usuarios`, {
                 method: "POST",
@@ -69,16 +68,17 @@ export function Estudantes() {
             })
 
             if (!response.ok) {
-                throw new Error(`Erro ao criar usuário: ${response.statusText}`);
+                throw new Error(`Erro ao criar usuário: ${response.statusText}`)
             }
 
 
             const dados = await response.json()
-            console.log(dados);
+            console.log(dados)
 
             setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
 
-            setCadastroAberto(null)
+            setCadastroAberto(false)
+            setNovoUsuario({ nome: "", email: "", celular: "" })
         } catch (error) {
             console.error(error)
         }
@@ -95,7 +95,7 @@ export function Estudantes() {
             })
 
             if (!response.ok) {
-                throw new Error(`Erro ao editar usuário: ${response.statusText}`);
+                throw new Error(`Erro ao editar usuário: ${response.statusText}`)
             }
 
             setUsuarios((prevUsuarios) =>
@@ -105,7 +105,6 @@ export function Estudantes() {
             )
 
             setEditaUsuario(null)
-            alert("Usuário adicionado com sucesso!")
         } catch (error) {
             console.error(error)
             alert("Erro ao criar o usuário.")
@@ -114,15 +113,18 @@ export function Estudantes() {
 
     const selectBD = usuarios.filter(usuario =>
         usuario.nome.toLowerCase().includes(procura.toLowerCase())
-    );
+    )
 
     function podeCriar() {
         setCadastroAberto(true)
+
     }
     function podeEditar(usuario) {
         setEditaUsuario(usuario)
         setNovoUsuario({ nome: usuario.nome, email: usuario.email, celular: usuario.celular })
     }
+
+    
 
     return (
         <Pagina>
@@ -183,7 +185,7 @@ export function Estudantes() {
                                 <div className="flex gap-4">
                                     <input
                                         type="tel"
-                                        placeholder="Digite seu celular (44-12345-6789)"
+                                        placeholder="Digite seu celular (44 12345-6789)"
                                         pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
 
                                         value={novoUsuario.celular}
@@ -243,5 +245,5 @@ export function Estudantes() {
                 </div>
             </div>
         </Pagina>
-    );
+    )
 }

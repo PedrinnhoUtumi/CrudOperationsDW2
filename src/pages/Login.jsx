@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 
 export function Login() {
     const navigate = useNavigate()  
@@ -7,42 +7,41 @@ export function Login() {
     const [email, setEmail] = useState('')
     const [celular, setCelular] = useState('')
     const handleLogin = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
     
         try {
-            // Construa a URL com parâmetros de consulta
-            const queryParams = new URLSearchParams({ nome, email, celular }).toString();
+            const queryParams = new URLSearchParams({ nome, email, celular }).toString()
             const response = await fetch(`http://localhost:3333/usuarios?${queryParams}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 },
-            });
+            })
     
             if (!response.ok) {
                 if (response.status === 404) {
-                    alert("Usuário não encontrado");
+                    alert("Usuário não encontrado")
                 } else {
-                    alert("Erro ao conectar ao servidor.");
+                    alert("Erro ao conectar ao servidor.")
                 }
-                return;
+                return
             }
     
-            const data = await response.json();
-            console.log(data);
+            const data = await response.json()
+            console.log(data)
             
             if (data.length > 0) {
-                navigate('/home');
+                navigate('/home')
             } else {
                 e.preventDefault()
                 alert("Erro ao encontrar usuário! Tente novamente")
             }
 
         } catch (error) {
-            console.error(error);
-            alert("Erro ao conectar ao servidor.");
+            console.error(error)
+            alert("Erro ao conectar ao servidor.")
         }
-    };
+    }
     
 
     return (
@@ -73,7 +72,7 @@ export function Login() {
                         <input
                             required
                             type="tel"
-                            placeholder="Digite seu celular (44-12345-6789)"
+                            placeholder="Digite seu celular (44 12345-6789)"
                             pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
                             id="celular"
                             className="p-3 w-full bg-azulEscuro rounded-md"
@@ -104,5 +103,5 @@ export function Login() {
                 <button className="bg-verde mt-8 p-3 w-10/12 rounded-md text-white">ENTRAR</button>
             </form>
         </div>
-    );
+    )
 }

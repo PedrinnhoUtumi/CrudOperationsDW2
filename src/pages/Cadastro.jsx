@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 export function Cadastro() {
     const [usuarios, setUsuarios] = useState([])
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [celular, setCelular] = useState('')
     const [novoUsuario, setNovoUsuario] = useState({ nome: '', email: '', celular: '' })
     async function enviaFormulario(e) {
-        e.preventDefault();
-        setNovoUsuario({ nome, email, celular });
+        e.preventDefault()
+        setNovoUsuario({ nome, email, celular })
         try {
             const response = await fetch("http://localhost:3333/usuarios", {
                 method: "POST",
@@ -22,22 +22,22 @@ export function Cadastro() {
             })
 
             if (!response.ok) {
-                console.log(response);
+                console.log(response)
 
             }
 
-            const textoResposta = await response.text();
-            const dados = textoResposta ? JSON.parse(textoResposta) : null;
+            const textoResposta = await response.text()
+            const dados = textoResposta ? JSON.parse(textoResposta) : null
 
             if (dados) {
-                setUsuarios((prevUsuarios) => [...prevUsuarios, dados]);
-                setNome("");  
-                setEmail("");
-                setCelular("");
-                navigate('/home');
+                setUsuarios((prevUsuarios) => [...prevUsuarios, dados])
+                setNome("")  
+                setEmail("")
+                setCelular("")
+                navigate('/home')
             }
 
-            navigate('/home');
+            navigate('/home')
             alert("Usuário adicionado com sucesso!")
         } catch (error) {
             console.error(error)
@@ -59,7 +59,7 @@ export function Cadastro() {
                             type="text"
                             id="usuario"
                             className="p-3 w-full bg-azulEscuro rounded-md"
-                            placeholder="Digite seu suário"
+                            placeholder="Digite seu usuário"
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
                         />
@@ -85,7 +85,7 @@ export function Cadastro() {
                         <input
                             required
                             type="tel"
-                            placeholder="Digite seu celular (44-12345-6789)"
+                            placeholder="Digite seu celular (44 12345-6789)"
                             pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
                             id="celular"
                             className="p-3 w-full bg-azulEscuro rounded-md"

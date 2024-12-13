@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Pagina } from "../components/Pagina";
-import { ArrowUpDown, CircleArrowLeft, Eye } from "lucide-react";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Pagina } from "../components/Pagina"
+import { ArrowUpDown, CircleArrowLeft, Eye } from "lucide-react"
 
 export function Pagamento() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [dados, setDados] = useState([
         { nome: "Pedro", pagamento: "R$ 100,00", numero: "1234", equilibrio: "R$ 50,00", data: "10/12/2024" },
         { nome: "Sara", pagamento: "R$ 200,00", numero: "5678", equilibrio: "R$ 100,00", data: "11/12/2024" },
-    ]);
+    ])
 
     const handleLogin = (e) => {
-        e.preventDefault();
-        navigate("/Home");
-    };
+        e.preventDefault()
+        navigate("/Home")
+    }
 
     return (
         <Pagina>
@@ -41,7 +41,7 @@ export function Pagamento() {
                         </thead>
                         <tbody>
                             {dados.map((item, index) => (
-                                <tr key={index}>  {/* Usando o índice como chave */}
+                                <tr key={index}>  
                                     <td className="border px-4 py-2">{item.nome}</td>
                                     <td className="border px-4 py-2">{item.pagamento}</td>
                                     <td className="border px-4 py-2">{item.numero}</td>
@@ -59,5 +59,5 @@ export function Pagamento() {
                 </div>
             </div>
         </Pagina>
-    );
+    )
 }
