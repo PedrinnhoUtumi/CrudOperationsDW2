@@ -128,7 +128,7 @@ export function Estudantes() {
         <Pagina>
             <div className="flex flex-col">
                 <header className="w-full h-10 p-8 flex flex-row justify-between items-center bg-verde">
-                    <CircleArrowLeft onClick={voltaParaHome} className="cursor-pointer text-azulMedio" />
+                    <CircleArrowLeft onClick={voltaParaHome} className="cursor-pointer text-azulMedio hover:text-white" />
                     <input type="text" placeholder="Search" className="p-2 border border-solid border-azulMedio bg-azulMedio text-verde rounded" onChange={(e) => setProcura(e.target.value)} />
                 </header>
                 <div className="bg-cinzaClaro flex flex-col w-full h-[90vh]">
